@@ -91,9 +91,9 @@ def search_users():
     db = get_db()
     rows = db.execute(
         "SELECT username, profile_pic FROM users "
-        "WHERE username LIKE ? AND username != ? "
+        "WHERE username LIKE ? "
         "ORDER BY username LIMIT 10",
-        ("%" + q + "%", session["username"])
+        ("%" + q + "%",)
     ).fetchall()
     db.close()
 
