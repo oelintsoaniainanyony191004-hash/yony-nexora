@@ -14,8 +14,81 @@ os.makedirs(UPLOAD_PROFILE, exist_ok=True)
 os.makedirs(UPLOAD_VIDEO, exist_ok=True)
 
 
+
+class PostgreSQLCompat:
+    def __init__(self, conn):
+        self.conn = conn
+        self.row_factory = None
+
+    def execute(self, sql, params=()):
+        sql = sql.replace("?", "%s")
+        sql = sql.replace("INTEGER PRIMARY KEY AUTOINCREMENT",
+                          "SERIAL PRIMARY KEY")
+        sql = sql.replace("INSERT OR IGNORE INTO",
+                          "INSERT INTO")
+        if "INSERT INTO" in sql and "ON CONFLICT" not in sql:
+            sql = sql.rstrip().rstrip(";") + " ON CONFLICT DO NOTHING"
+        cur = self.conn.cursor()
+        try:
+            cur.execute(sql, params)
+        except Exception as e:
+            cur.close()
+            if getattr(e, "pgcode", None) == "23505":
+                raise sqlite3.IntegrityError(str(e)) from e
+            raise
+        return cur
+
+    def cursor(self):
+        return PostgreSQLCursor(self)
+
+    def commit(self):
+        self.conn.commit()
+
+    def close(self):
+        self.conn.close()
+
+
+class PostgreSQLCursor:
+    def __init__(self, db):
+        self.db = db
+        self.cur = db.conn.cursor()
+        self.fake_rows = None
+
+    def execute(self, sql, params=()):
+        if "PRAGMA table_info(user_settings)" in sql:
+            self.cur.execute("""
+                SELECT column_name AS name
+                FROM information_schema.columns
+                WHERE table_schema = 'public'
+                  AND table_name = 'user_settings'
+                ORDER BY ordinal_position
+            """)
+            return self
+        sql = sql.replace("?", "%s")
+        sql = sql.replace("INSERT OR IGNORE INTO", "INSERT INTO")
+        if "INSERT INTO" in sql and "ON CONFLICT" not in sql:
+            sql = sql.rstrip().rstrip(";") + " ON CONFLICT DO NOTHING"
+        self.cur.execute(sql, params)
+        return self
+
+    def fetchone(self):
+        return self.cur.fetchone()
+
+    def fetchall(self):
+        return self.cur.fetchall()
+
+    def close(self):
+        self.cur.close()
+
+
 def get_db():
-    return sqlite3.connect("social.db")
+    url = os.environ.get("DATABASE_URL")
+    if not url:
+        return sqlite3.connect("social.db")
+    import psycopg2
+    from psycopg2.extras import DictCursor
+    conn = psycopg2.connect(url, cursor_factory=DictCursor)
+    return PostgreSQLCompat(conn)
 
 def init_interaction_tables():
     db = get_db()
@@ -441,7 +514,7 @@ def settings():
         return redirect("/login")
 
     username = session["username"]
-    conn = sqlite3.connect("social.db")
+    conn = get_db()
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
 
