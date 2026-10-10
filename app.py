@@ -67,14 +67,6 @@ def init_interaction_tables():
 
 
 init_interaction_tables()
-    db = get_db()
-    db.execute("CREATE TABLE IF NOT EXISTS likes (id INTEGER PRIMARY KEY AUTOINCREMENT, post_id INTEGER NOT NULL, username TEXT NOT NULL, created_at TEXT DEFAULT CURRENT_TIMESTAMP, UNIQUE(post_id, username))")
-    db.execute("CREATE TABLE IF NOT EXISTS comments (id INTEGER PRIMARY KEY AUTOINCREMENT, post_id INTEGER NOT NULL, username TEXT NOT NULL, content TEXT NOT NULL, created_at TEXT DEFAULT CURRENT_TIMESTAMP)")
-    db.execute("CREATE TABLE IF NOT EXISTS shares (id INTEGER PRIMARY KEY AUTOINCREMENT, post_id INTEGER NOT NULL, username TEXT NOT NULL, created_at TEXT DEFAULT CURRENT_TIMESTAMP)")
-    db.commit()
-    db.close()
-
-init_interaction_tables()
 
 
 
