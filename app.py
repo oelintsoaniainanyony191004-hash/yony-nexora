@@ -79,6 +79,55 @@ init_interaction_tables()
 
 
 
+@app.route("/search_users")
+def search_users():
+    if "username" not in session:
+        return jsonify([])
+
+    q = request.args.get("q", "").strip()
+    if not q:
+        return jsonify([])
+
+    db = get_db()
+    rows = db.execute(
+        "SELECT username, profile_pic FROM users "
+        "WHERE username LIKE ? AND username != ? "
+        "ORDER BY username LIMIT 10",
+        ("%" + q + "%", session["username"])
+    ).fetchall()
+    db.close()
+
+    return jsonify([
+        {"username": row[0], "profile_pic": row[1]}
+        for row in rows
+    ])
+
+
+@app.route("/user/<username>")
+def view_user(username):
+    if "username" not in session:
+        return redirect("/login")
+
+    db = get_db()
+    row = db.execute(
+        "SELECT username, profile_pic, bio, cover_pic "
+        "FROM users WHERE username=?",
+        (username,)
+    ).fetchone()
+    db.close()
+
+    if not row:
+        return "Kaonty tsy hita.", 404
+
+    user = {
+        "username": row[0],
+        "profile_pic": row[1],
+        "bio": row[2],
+        "cover_pic": row[3]
+    }
+    return render_template("user_profile.html", user=user)
+
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if "username" not in session:

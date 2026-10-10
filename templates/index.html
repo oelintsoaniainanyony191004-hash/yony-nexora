@@ -516,7 +516,48 @@
                 font-size: 13px;
             }
         }
-    </style>
+    
+        .search-wrap {
+            position: relative;
+        }
+        .search-results {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            width: 280px;
+            max-width: 85vw;
+            background: white;
+            color: #222;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px #0002;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .search-results a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            color: #222;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+        .search-results a:hover {
+            background: #f0f2f5;
+        }
+        .search-results img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .search-results .search-empty {
+            padding: 12px;
+            color: #65676b;
+        }
+
+</style>
 <style>
 .menu-dropdown {
     display: none;
@@ -553,11 +594,16 @@
     <div class="top-left">
         <div class="logo">Yony Nexora</div>
 
-        <input
-            class="search"
-            type="text"
-            placeholder="🔍 Rechercher..."
-        >
+        <div class="search-wrap">
+            <input
+                id="userSearch"
+                class="search"
+                type="search"
+                placeholder="🔍 Rechercher..."
+                autocomplete="off"
+            >
+            <div id="searchResults" class="search-results"></div>
+        </div>
     </div>
 
     <nav class="top-menu">
@@ -1105,6 +1151,77 @@ function toggleMenu() {
     document.getElementById("menuDropdown").classList.toggle("show");
 }
 </script>
+
+<script>
+(() => {
+    const input = document.getElementById("userSearch");
+    const results = document.getElementById("searchResults");
+    if (!input || !results) return;
+
+    let timer;
+
+    input.addEventListener("input", () => {
+        clearTimeout(timer);
+        const q = input.value.trim();
+
+        if (!q) {
+            results.style.display = "none";
+            results.replaceChildren();
+            return;
+        }
+
+        timer = setTimeout(async () => {
+            try {
+                const response = await fetch(
+                    "/search_users?q=" + encodeURIComponent(q)
+                );
+                const users = await response.json();
+                results.replaceChildren();
+                results.style.display = "block";
+
+                if (!users.length) {
+                    const empty = document.createElement("div");
+                    empty.className = "search-empty";
+                    empty.textContent = "Tsy misy kaonty hita.";
+                    results.appendChild(empty);
+                    return;
+                }
+
+                users.forEach(user => {
+                    const link = document.createElement("a");
+                    link.href = "/user/" + encodeURIComponent(user.username);
+
+                    if (user.profile_pic) {
+                        const img = document.createElement("img");
+                        img.src = "/static/uploads/profile/" + user.profile_pic;
+                        img.alt = "";
+                        link.appendChild(img);
+                    }
+
+                    const name = document.createElement("span");
+                    name.textContent = user.username;
+                    link.appendChild(name);
+                    results.appendChild(link);
+                });
+            } catch (error) {
+                results.replaceChildren();
+                const empty = document.createElement("div");
+                empty.className = "search-empty";
+                empty.textContent = "Tsy afaka nanao recherche.";
+                results.appendChild(empty);
+                results.style.display = "block";
+            }
+        }, 250);
+    });
+
+    document.addEventListener("click", event => {
+        if (!event.target.closest(".search-wrap")) {
+            results.style.display = "none";
+        }
+    });
+})();
+</script>
+
 </body>
 </html>
 

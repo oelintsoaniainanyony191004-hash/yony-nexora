@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profil - Yony Nexora</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f0f2f5;color:#1c1e21}
+header{background:#6c2bd9;color:white;padding:16px 20px;display:flex;justify-content:space-between}
+header a{color:white;text-decoration:none}
+main{max-width:850px;margin:25px auto;padding:0 12px}
+.cover{height:240px;background:linear-gradient(135deg,#6c2bd9,#182848);background-size:cover;background-position:center;border-radius:12px 12px 0 0}
+.profile{background:white;padding:0 22px 25px;border-radius:0 0 12px 12px}
+.avatar{width:125px;height:125px;margin-top:-55px;position:relative;object-fit:cover;border-radius:50%;border:5px solid white;background:#eee}
+h2{margin:10px 0}
+.muted{color:#65676b}
+</style>
+</head>
+<body>
+<header><strong>Yony Nexora</strong><a href="/">🏠 Accueil</a></header>
+<main>
+<div class="cover" {% if user.cover_pic %}style="background-image:url('{{ url_for('static', filename='uploads/cover/' + user.cover_pic) }}')"{% endif %}></div>
+<section class="profile">
+{% if user.profile_pic %}
+<img class="avatar" src="{{ url_for('static', filename='uploads/profile/' + user.profile_pic) }}" alt="Photo de profil">
+{% else %}
+<div class="avatar" style="display:flex;align-items:center;justify-content:center;font-size:50px">👤</div>
+{% endif %}
+<h2>{{ user.username }}</h2>
+<p class="muted">{{ user.bio or "Membre de Yony Nexora" }}</p>
+</section>
+</main>
+</body>
+</html>
