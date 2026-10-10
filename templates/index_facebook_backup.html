@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yony Nexora</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f0f2f5;
+            color: #050505;
+        }
+
+        /* ================= HEADER ================= */
+
+        .topbar {
+            height: 62px;
+            background: #1877f2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,.18);
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background: rgba(255,255,255,.15);
+            padding: 9px 13px;
+            border-radius: 8px;
+        }
+
+        .logout:hover {
+            background: rgba(255,255,255,.25);
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search {
+            background: #f0f2f5;
+            border-radius: 20px;
+            padding: 9px 14px;
+            border: none;
+            outline: none;
+            width: 220px;
+            font-size: 14px;
+        }
+
+        /* ================= LAYOUT ================= */
+
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 12px;
+            display: grid;
+            grid-template-columns: 220px minmax(0, 600px) 220px;
+            gap: 18px;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar,
+        .rightbar {
+            position: sticky;
+            top: 82px;
+            height: fit-content;
+        }
+
+        .side-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+
+        .side-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .side-item:hover {
+            background: #f0f2f5;
+        }
+
+        .side-icon {
+            font-size: 22px;
+        }
+
+        /* ================= PROFILE ================= */
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,.15);
+            margin-bottom: 18px;
+        }
+
+        .cover {
+            height: 100px;
+            background: linear-gradient(135deg, #1877f2, #6ea8fe);
+        }
+
+        .profile-content {
+            text-align: center;
+            padding: 0 15px 18px;
+        }
+
+        .profile-picture {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            margin-top: -55px;
+            background: #ddd;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 5px solid white;
+            background: #1877f2;
+            color: white;
+            margin: -55px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            font-weight: bold;
+        }
+
+        .username {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 8px 0 14px;
+        }
+
+        .profile-form input[type="file"],
+        .video-form input[type="file"] {
+            width: 100%;
+            margin: 8px 0;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .btn {
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #166fe5;
+        }
+
+        /* ================= CREATE POST ================= */
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+
+        .create-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 13px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 110px;
+            resize: vertical;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 13px;
+            font-size: 16px;
+            outline: none;
+            background: #f5f6f7;
+        }
+
+        textarea:focus {
+            background: white;
+            border-color: #1877f2;
+        }
+
+        .post-button {
+            margin-top: 12px;
+        }
+
+        /* ================= VIDEO ================= */
+
+        .upload-video {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        /* ================= POSTS ================= */
+
+        .section-title {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .post {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .post-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #1877f2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .post-user {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .post-date {
+            color: #65676b;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .post-content {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 12px 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* ================= ACTIONS ================= */
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid #ddd;
+            padding-top: 8px;
+            gap: 5px;
+        }
+
+        .action {
+            border: none;
+            background: transparent;
+            padding: 10px 5px;
+            border-radius: 7px;
+            font-weight: bold;
+            color: #65676b;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .action:hover {
+            background: #f0f2f5;
+        }
+
+        /* ================= RIGHT ================= */
+
+        .right-title {
+            font-weight: bold;
+            color: #65676b;
+            margin-bottom: 12px;
+        }
+
+        .online {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-weight: bold;
+        }
+
+        .green-dot {
+            width: 10px;
+            height: 10px;
+            background: #31a24c;
+            border-radius: 50%;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 850px) {
+
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 650px;
+            }
+
+            .sidebar,
+            .rightbar {
+                display: none;
+            }
+
+            .search {
+                display: none;
+            }
+
+            .topbar {
+                height: 58px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .container {
+                margin-top: 10px;
+                padding: 0 8px;
+            }
+
+            .card,
+            .post,
+            .profile-card {
+                border-radius: 10px;
+            }
+
+            .topbar {
+                padding: 0 12px;
+            }
+
+            .logout {
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+
+            .profile-picture,
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .avatar {
+                font-size: 40px;
+            }
+
+            .actions {
+                gap: 2px;
+            }
+
+            .action {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="topbar">
+
+    <div class="logo">
+        Yony Nexora
+    </div>
+
+    <input
+        class="search"
+        type="text"
+        placeholder="🔍 Rechercher sur Yony Nexora..."
+    >
+
+    <a class="logout" href="/logout">
+        Déconnexion
+    </a>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- ================= LEFT SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="side-card">
+
+            <div class="side-item">
+                <span class="side-icon">🏠</span>
+                Accueil
+            </div>
+
+            <div class="side-item">
+                <span class="side-icon">👤</span>
+                Mon profil
+            </div>
+
+            <div class="side-item">
+                <span class="side-icon">👥</span>
+                Amis
+            </div>
+
+            <div class="side-item">
+                <span class="side-icon">🎬</span>
+                Vidéos
+            </div>
+
+            <div class="side-item">
+                <span class="side-icon">🔔</span>
+                Notifications
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= FEED ================= -->
+
+    <main>
+
+
+        <!-- PROFILE -->
+
+        <div class="profile-card">
+
+            <div class="cover"></div>
+
+            <div class="profile-content">
+
+                {% if profile_pic %}
+
+                    <img
+                        class="profile-picture"
+                        src="{{ url_for('static', filename='uploads/profile/' + profile_pic) }}"
+                        alt="Photo de profil"
+                    >
+
+                {% else %}
+
+                    <div class="avatar">
+                        {{ username[0]|upper }}
+                    </div>
+
+                {% endif %}
+
+                <div class="username">
+                    {{ username }}
+                </div>
+
+                <form
+                    class="profile-form"
+                    action="/profile"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    <input
+                        type="file"
+                        name="profile_pic"
+                        accept="image/*"
+                    >
+
+                    <button class="btn" type="submit">
+                        📷 Changer PDP
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- CREATE POST -->
+
+        <div class="card">
+
+            <div class="create-title">
+                📝 Créer une publication
+            </div>
+
+            <form action="/post" method="POST">
+
+                <textarea
+                    name="content"
+                    placeholder="Soraty eto izay tianao hozaraina..."
+                    required
+                ></textarea>
+
+                <div class="post-button">
+
+                    <button class="btn" type="submit">
+                        Publier
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- VIDEO -->
+
+        <div class="card">
+
+            <div class="create-title">
+                🎥 Publier une vidéo
+            </div>
+
+            <form
+                class="video-form"
+                action="/upload_video"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <input
+                    type="file"
+                    name="video"
+                    accept="video/*"
+                    required
+                >
+
+                <button class="btn" type="submit">
+                    🎬 Publier vidéo
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- POSTS -->
+
+        <div class="section-title">
+            📰 Publications récentes
+        </div>
+
+
+        {% for post in posts %}
+
+        <article class="post">
+
+            <div class="post-header">
+
+                <div class="post-avatar">
+                    {{ post[0][0]|upper }}
+                </div>
+
+                <div>
+
+                    <div class="post-user">
+                        {{ post[0] }}
+                    </div>
+
+                    <div class="post-date">
+                        {{ post[2] }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="post-content">
+                {{ post[1] }}
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="action"
+                    type="button"
+                    onclick="likePost(this)"
+                >
+                    👍 J'aime
+                </button>
+
+                <button
+                    class="action"
+                    type="button"
+                    onclick="commentPost()"
+                >
+                    💬 Commenter
+                </button>
+
+                <button
+                    class="action"
+                    type="button"
+                    onclick="sharePost()"
+                >
+                    🔄 Partager
+                </button>
+
+            </div>
+
+        </article>
+
+        {% else %}
+
+        <div class="card">
+            <p style="text-align:center;color:#65676b;">
+                Tsy mbola misy publication.
+            </p>
+        </div>
+
+        {% endfor %}
+
+
+    </main>
+
+
+    <!-- ================= RIGHT SIDEBAR ================= -->
+
+    <aside class="rightbar">
+
+        <div class="side-card">
+
+            <div class="right-title">
+                Contacts
+            </div>
+
+            <div class="online">
+                <span class="green-dot"></span>
+                {{ username }}
+            </div>
+
+            <div class="online">
+                <span class="green-dot"></span>
+                Yony Nexora
+            </div>
+
+        </div>
+
+
+        <div class="side-card">
+
+            <div class="right-title">
+                Votre raccourci
+            </div>
+
+            <div class="side-item">
+                👥 Mes amis
+            </div>
+
+            <div class="side-item">
+                🎬 Mes vidéos
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+function likePost(button) {
+
+    if (button.innerText.includes("J'aime")) {
+
+        button.innerText = "❤️ J'aime";
+
+    } else {
+
+        button.innerText = "👍 J'aime";
+
+    }
+
+}
+
+
+function commentPost() {
+
+    alert("💬 Fonction Commentaire : on va l'ajouter ensuite.");
+
+}
+
+
+function sharePost() {
+
+    alert("🔄 Fonction Partage : on va l'ajouter ensuite.");
+
+}
+
+</script>
+
+</body>
+</html>

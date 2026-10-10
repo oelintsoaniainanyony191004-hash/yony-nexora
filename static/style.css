@@ -1,0 +1,233 @@
+
+.side-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #050505;
+    font-weight: 700;
+}
+
+.side-profile:hover {
+    background: #e4e6eb;
+}
+
+.side-profile img,
+.side-profile-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.side-profile-avatar {
+    background: #6c2bd9;
+    color: white;
+}
+
+
+/* FACEBOOK LITE - STORIES MOBILE */
+.stories-card {
+    overflow: hidden;
+}
+
+.stories {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 8px 2px 4px;
+    scrollbar-width: none;
+}
+
+.stories::-webkit-scrollbar {
+    display: none;
+}
+
+.story {
+    min-width: 92px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.story-avatar {
+    width: 92px;
+    height: 120px;
+    border-radius: 10px;
+    background: #e4e6eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 850px) {
+    .container {
+        display: block;
+        max-width: 100%;
+        margin: 8px 0;
+        padding: 0;
+    }
+
+    main {
+        width: 100%;
+    }
+
+    .stories-card,
+    .create-post,
+    .post {
+        border-radius: 0;
+        margin-bottom: 6px;
+    }
+
+    .stories-card {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 850px) {
+    .sidebar {
+        display: block;
+        position: static;
+        width: 100%;
+        margin: 0 0 6px;
+    }
+
+    .sidebar .side-card {
+        display: none;
+    }
+
+    .side-profile {
+        background: #fff;
+        padding: 8px 12px;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: 0 1px 2px rgba(0,0,0,.12);
+    }
+
+    .side-profile img,
+    .side-profile-avatar {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+@media (max-width: 850px) {
+    .container {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .sidebar {
+        display: block !important;
+        order: 0 !important;
+        width: 100% !important;
+    }
+
+    main {
+        order: 1 !important;
+        width: 100% !important;
+    }
+
+    .rightbar {
+        display: none !important;
+    }
+}
+
+.mobile-profile {
+    display: none;
+}
+
+@media (max-width: 850px) {
+    .mobile-profile {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        background: #fff;
+        padding: 8px 12px;
+        margin-bottom: 6px;
+        color: #050505;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .mobile-profile img,
+    .mobile-profile-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .mobile-profile-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #1877f2;
+        color: #fff;
+    }
+}
+@media (max-width: 850px) {
+    .mobile-profile {
+        padding: 5px 10px !important;
+        margin-bottom: 4px !important;
+        font-size: 13px !important;
+    }
+
+    .mobile-profile img,
+    .mobile-profile-avatar {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 14px !important;
+    }
+}
+@media (max-width:850px){
+.mobile-profile{display:flex!important;align-items:center;padding:4px 10px;margin:0;background:#fff;color:#050505;text-decoration:none;font-size:13px}
+}
+@media (max-width:850px){
+.mobile-profile{
+    display:flex!important;
+    padding:5px 10px;
+    background:#fff;
+}
+.mobile-profile img,
+.mobile-profile-avatar{
+    width:36px!important;
+    height:36px!important;
+    border-radius:50%;
+    object-fit:cover;
+}
+}
+.mobile-profile{
+    width:32px!important;
+    height:32px!important;
+    padding:0!important;
+    margin:4px 8px!important;
+    display:block!important;
+}
+.mobile-profile img,
+.mobile-profile-avatar{
+    width:32px!important;
+    height:32px!important;
+    min-width:32px!important;
+    min-height:32px!important;
+    max-width:32px!important;
+    max-height:32px!important;
+    border-radius:50%!important;
+    object-fit:cover!important;
+}
+.create-pdp{
+    width:32px!important;
+    height:32px!important;
+    border-radius:50%!important;
+    object-fit:cover!important;
+    vertical-align:middle;
+    margin-right:8px;
+}

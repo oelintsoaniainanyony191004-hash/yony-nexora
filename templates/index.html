@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Yony Nexora</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f0f2f5;
+            color: #050505;
+        }
+
+        /* ================= HEADER ================= */
+
+        .topbar {
+            height: 62px;
+            background: #6c2bd9;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,.18);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: .5px;
+            text-shadow: 0 2px 5px rgba(0,0,0,.20);
+            white-space: nowrap;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background: rgba(255,255,255,.12);
+            padding: 9px 13px;
+            border-radius: 8px;
+        }
+
+        .logout:hover {
+            background: rgba(255,255,255,.20);
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search {
+            background: #f0f2f5;
+            border-radius: 20px;
+            padding: 9px 14px;
+            border: none;
+            outline: none;
+            width: 220px;
+            font-size: 14px;
+        }
+
+        /* ================= LAYOUT ================= */
+
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 12px;
+            display: grid;
+            grid-template-columns: 220px minmax(0, 600px) 220px;
+            gap: 18px;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar,
+        .rightbar {
+            position: sticky;
+            top: 82px;
+            height: fit-content;
+        }
+
+        .side-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+
+        .side-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .side-item:hover {
+            background: #f0f2f5;
+        }
+
+        .side-icon {
+            font-size: 22px;
+        }
+
+        /* ================= PROFILE ================= */
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,.15);
+            margin-bottom: 18px;
+        }
+
+        .cover {
+            height: 100px;
+            background: linear-gradient(135deg, #6c2bd9, #6ea8fe);
+        }
+
+        .profile-content {
+            text-align: center;
+            padding: 0 15px 18px;
+        }
+
+        .profile-picture {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            margin-top: -55px;
+            background: #ddd;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 5px solid white;
+            background: #6c2bd9;
+            color: white;
+            margin: -55px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            font-weight: bold;
+        }
+
+        .username {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 8px 0 14px;
+        }
+
+        .profile-form input[type="file"],
+        .video-form input[type="file"] {
+            width: 100%;
+            margin: 8px 0;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .btn {
+            background: #6c2bd9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #166fe5;
+        }
+
+        /* ================= CREATE POST ================= */
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+
+        .create-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 13px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 110px;
+            resize: vertical;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 13px;
+            font-size: 16px;
+            outline: none;
+            background: #f5f6f7;
+        }
+
+        textarea:focus {
+            background: white;
+            border-color: #6c2bd9;
+        }
+
+        .post-button {
+            margin-top: 12px;
+        }
+
+        /* ================= VIDEO ================= */
+
+        .upload-video {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        /* ================= POSTS ================= */
+
+        .section-title {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .post {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .post-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #6c2bd9;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .post-user {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .post-date {
+            color: #65676b;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .post-content {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 12px 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* ================= ACTIONS ================= */
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid #ddd;
+            padding-top: 8px;
+            gap: 5px;
+        }
+
+        .action {
+            border: none;
+            background: transparent;
+            padding: 10px 5px;
+            border-radius: 7px;
+            font-weight: bold;
+            color: #65676b;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .action:hover {
+            background: #f0f2f5;
+        }
+
+        /* ================= RIGHT ================= */
+
+        .right-title {
+            font-weight: bold;
+            color: #65676b;
+            margin-bottom: 12px;
+        }
+
+        .online {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-weight: bold;
+        }
+
+        .green-dot {
+            width: 10px;
+            height: 10px;
+            background: #31a24c;
+            border-radius: 50%;
+        }
+
+
+        /* ================= NEW TOP NAV ================= */
+
+        .top-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            min-width: 0;
+        }
+
+        .top-menu {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 100%;
+        }
+
+        .top-item {
+            position: relative;
+            height: 48px;
+            min-width: 65px;
+            padding: 5px 8px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1px;
+            font-size: 21px;
+            transition: .2s;
+        }
+
+        .top-item span {
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .top-item:hover {
+            background: rgba(255,255,255,.18);
+        }
+
+        .top-item.active {
+            background: rgba(255,255,255,.20);
+        }
+
+        .logout-top {
+            background: rgba(255,255,255,.10);
+        }
+
+        .badge {
+            position: absolute;
+            top: 1px;
+            right: 7px;
+            min-width: 17px;
+            height: 17px;
+            padding: 0 4px;
+            border-radius: 20px;
+            background: #e41e3f;
+            color: white;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 850px) {
+
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 650px;
+            }
+
+            .sidebar,
+            .rightbar {
+                display: none;
+            }
+
+            .search {
+                display: none;
+            }
+
+            .topbar {
+                height: 58px;
+                padding: 0 6px;
+                gap: 3px;
+            }
+
+            .top-left {
+                gap: 5px;
+                flex-shrink: 0;
+            }
+
+            .logo {
+                font-size: 17px;
+            }
+
+            .top-menu {
+                display: flex;
+                position: static;
+                background: transparent;
+                padding: 0;
+                width: auto;
+                height: 100%;
+                flex-direction: row;
+                box-shadow: none;
+                gap: 1px;
+                flex: 1;
+                justify-content: flex-end;
+            }
+
+            .top-item {
+                width: 38px;
+                height: 45px;
+                min-width: 38px;
+                padding: 3px;
+                border-radius: 8px;
+                flex-direction: column;
+                justify-content: center;
+                gap: 0;
+                font-size: 19px;
+            }
+
+            .top-item span {
+                display: none;
+            }
+
+            .badge {
+                right: 0;
+                top: 1px;
+                min-width: 14px;
+                height: 14px;
+                font-size: 8px;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .container {
+                margin-top: 10px;
+                padding: 0 8px;
+            }
+
+            .card,
+            .post,
+            .profile-card {
+                border-radius: 10px;
+            }
+
+            .topbar {
+                padding: 0 12px;
+            }
+
+            .logout {
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+
+            .profile-picture,
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .avatar {
+                font-size: 40px;
+            }
+
+            .actions {
+                gap: 2px;
+            }
+
+            .action {
+                font-size: 13px;
+            }
+        }
+    </style>
+<style>
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.20);
+    min-width: 180px;
+    z-index: 9999;
+}
+.menu-dropdown.show {
+    display: block;
+}
+.menu-dropdown a {
+    display: block;
+    padding: 14px 18px;
+    color: #222;
+    text-decoration: none;
+}
+.menu-dropdown a:hover {
+    background: #f0f2f5;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="topbar">
+
+    <div class="top-left">
+        <div class="logo">Yony Nexora</div>
+
+        <input
+            class="search"
+            type="text"
+            placeholder="🔍 Rechercher..."
+        >
+    </div>
+
+    <nav class="top-menu">
+
+        <a href="/" class="top-item active" title="Accueil">
+            🏦
+            <span>Accueil</span>
+        </a>
+
+        <a href="/friends" class="top-item" title="Amis">
+            👥
+            <span>Amis</span>
+        </a>
+
+        <a href="/add" class="top-item" title="Ajouter">
+            ➕
+            <span>Ajouter</span>
+        </a>
+
+        <a href="/messages" class="top-item" title="Messages">
+            💬
+            <span>Messages</span>
+            <b class="badge">0</b>
+        </a>
+
+        <a href="/notifications" class="top-item" title="Notifications">
+            🔔
+            <span>Notifications</span>
+            <b class="badge">0</b>
+        </a>
+
+        <a href="/profile" class="top-item" title="Profil">
+            👤
+            <span>Profil</span>
+        </a>
+
+        <a href="#" class="top-item" title="Menu" onclick="toggleMenu(); return false;">
+            ☰
+            <span>Menu</span>
+        </a>
+
+    </nav>
+
+    <div id="menuDropdown" class="menu-dropdown">
+        <a href="/settings">⚙️ Paramètres</a>
+        <a href="/logout">🚪 Déconnexion</a>
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- ================= LEFT SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="side-card">
+
+            <div class="side-item">
+                <span class="side-icon">🏦</span>
+                Accueil
+            </div>
+
+            <div class="side-item">
+                <span class="side-icon">👤</span>
+                Mon profil
+            </div>
+
+            <div class="side-item">
+                <span class="side-icon">👥</span>
+                Amis
+            </div>
+
+            <div class="side-item">
+                <span class="side-icon">🎬</span>
+                Vidéos
+            </div>
+
+            <div class="side-item">
+                <span class="side-icon">🔔</span>
+                Notifications
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= FEED ================= -->
+
+    <main>
+
+
+        <!-- PROFILE -->
+
+        <div class="profile-card">
+
+            <div class="cover"></div>
+
+            <div class="profile-content">
+
+                {% if profile_pic %}
+
+                    <img
+                        class="profile-picture"
+                        src="{{ url_for('static', filename='uploads/profile/' + profile_pic) }}"
+                        alt="Photo de profil"
+                    >
+
+                {% else %}
+
+                    <div class="avatar">
+                        {{ username[0]|upper }}
+                    </div>
+
+                {% endif %}
+
+                <div class="username">
+                    {{ username }}
+                </div>
+
+                <form
+                    class="profile-form"
+                    action="/profile"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    <input
+                        type="file"
+                        name="profile_pic"
+                        accept="image/*"
+                    >
+
+                    <button class="btn" type="submit">
+                        📷 Changer PDP
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- CREATE POST -->
+
+        <div class="card">
+
+            <div class="create-title">
+                📝 Créer une publication
+            </div>
+
+            <form action="/post" method="POST">
+
+                <textarea
+                    name="content"
+                    placeholder="Soraty eto izay tianao hozaraina..."
+                    required
+                ></textarea>
+
+                <div class="post-button">
+
+                    <button class="btn" type="submit">
+                        Publier
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- VIDEO -->
+
+        <div class="card">
+
+            <div class="create-title">
+                🎥 Publier une vidéo
+            </div>
+
+            <form
+                class="video-form"
+                action="/upload_video"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <input
+                    type="file"
+                    name="video"
+                    accept="video/*"
+                    required
+                >
+
+                <button class="btn" type="submit">
+                    🎬 Publier vidéo
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- POSTS -->
+
+        <div class="section-title">
+            📰 Publications récentes
+        </div>
+
+
+        {% for post in posts %}
+
+        <article class="post" data-post-id="{{ post[0] }}">
+
+            <div class="post-header">
+
+                <div class="post-avatar">
+                    {{ post[1][0]|upper }}
+                </div>
+
+                <div>
+                    <div class="post-user">
+                        {{ post[1] }}
+                    </div>
+
+                    <div class="post-date">
+                        {{ post[3] }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="post-content">
+                {{ post[2] }}
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="action"
+                    type="button"
+                    onclick="likePost(this)"
+                >
+                    👍 J'aime
+                </button>
+
+                <button
+                    class="action comment-button"
+                    type="button"
+                    onclick="toggleComments(this)"
+                >
+                    💬 Commenter <span class="comment-count">{{ post[4] }}</span>
+                </button>
+
+                <button
+                    class="action share-button"
+                    type="button"
+                    onclick="sharePost(this)"
+                >
+                    🔄 Partager <span class="share-count">{{ post[5] }}</span>
+                </button>
+
+            </div>
+
+            <div class="comments-box" style="display:none;">
+
+                <div class="comments-list"></div>
+
+                <form class="comment-form" onsubmit="addComment(event, this)">
+
+                    <input
+                        type="text"
+                        name="content"
+                        placeholder="Soraty ny commentaire..."
+                        required
+                    >
+
+                    <button type="submit" class="btn">
+                        Envoyer
+                    </button>
+
+                </form>
+
+            </div>
+
+        </article>
+
+        {% else %}
+
+        <div class="card">
+            <p style="text-align:center;color:#65676b;">
+                Tsy mbola misy publication.
+            </p>
+        </div>
+
+        {% endfor %}
+
+
+    </main>
+
+
+    <!-- ================= RIGHT SIDEBAR ================= -->
+
+    <aside class="rightbar">
+
+        <div class="side-card">
+
+            <div class="right-title">
+                Contacts
+            </div>
+
+            <div class="online">
+                <span class="green-dot"></span>
+                {{ username }}
+            </div>
+
+            <div class="online">
+                <span class="green-dot"></span>
+                Yony Nexora
+            </div>
+
+        </div>
+
+
+        <div class="side-card">
+
+            <div class="right-title">
+                Votre raccourci
+            </div>
+
+            <div class="side-item">
+                👥 Mes amis
+            </div>
+
+            <div class="side-item">
+                🎬 Mes vidéos
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+function likePost(button) {
+
+    if (button.innerText.includes("J'aime")) {
+        button.innerText = "❤️ J'aime";
+    } else {
+        button.innerText = "👍 J'aime";
+    }
+
+}
+
+
+async function toggleComments(button) {
+
+    const post = button.closest(".post");
+    const box = post.querySelector(".comments-box");
+    const list = post.querySelector(".comments-list");
+    const postId = post.dataset.postId;
+
+    if (box.style.display === "none") {
+
+        box.style.display = "block";
+
+        list.innerHTML = "<p style='color:#777;'>Chargement...</p>";
+
+        try {
+
+            const response = await fetch("/comments/" + postId);
+            const data = await response.json();
+
+            list.innerHTML = "";
+
+            if (!data.comments.length) {
+
+                list.innerHTML =
+                    "<p style='color:#777;text-align:center;'>Tsy mbola misy commentaire.</p>";
+
+            } else {
+
+                data.comments.forEach(comment => {
+
+                    const div = document.createElement("div");
+                    div.className = "comment";
+
+                    div.innerHTML =
+                        "<strong>" +
+                        escapeHtml(comment.username) +
+                        "</strong><br>" +
+                        "<span>" +
+                        escapeHtml(comment.content) +
+                        "</span>";
+
+                    list.appendChild(div);
+
+                });
+
+            }
+
+        } catch (error) {
+
+            list.innerHTML =
+                "<p style='color:red;'>Erreur lors du chargement.</p>";
+
+        }
+
+    } else {
+
+        box.style.display = "none";
+
+    }
+
+}
+
+
+async function addComment(event, form) {
+
+    event.preventDefault();
+
+    const post = form.closest(".post");
+    const postId = post.dataset.postId;
+    const input = form.querySelector("input[name='content']");
+    const content = input.value.trim();
+
+    if (!content) return;
+
+    const formData = new FormData();
+    formData.append("content", content);
+
+    try {
+
+        const response = await fetch("/comment/" + postId, {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            const list = post.querySelector(".comments-list");
+
+            const empty = list.querySelector("p");
+
+            if (empty) {
+                empty.remove();
+            }
+
+            const div = document.createElement("div");
+            div.className = "comment";
+
+            div.innerHTML =
+                "<strong>" +
+                escapeHtml(data.username) +
+                "</strong><br>" +
+                "<span>" +
+                escapeHtml(data.content) +
+                "</span>";
+
+            list.appendChild(div);
+
+            post.querySelector(".comment-count").innerText = data.count;
+
+            input.value = "";
+
+        } else {
+
+            alert(data.message);
+
+        }
+
+    } catch (error) {
+
+        alert("Erreur lors de l'envoi du commentaire.");
+
+    }
+
+}
+
+
+async function sharePost(button) {
+
+    const post = button.closest(".post");
+    const postId = post.dataset.postId;
+
+    try {
+
+        const response = await fetch("/share/" + postId, {
+            method: "POST"
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            post.querySelector(".share-count").innerText = data.count;
+
+            button.innerHTML =
+                "✅ Partagé <span class='share-count'>" +
+                data.count +
+                "</span>";
+
+        } else {
+
+            alert(data.message);
+
+        }
+
+    } catch (error) {
+
+        alert("Erreur lors du partage.");
+
+    }
+
+}
+
+
+function escapeHtml(text) {
+
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+
+}
+
+</script>
+
+
+<script>
+function toggleMenu() {
+    document.getElementById("menuDropdown").classList.toggle("show");
+}
+</script>
+</body>
+</html>
+

@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+social.db
+social_backup*.db
+static/uploads/*

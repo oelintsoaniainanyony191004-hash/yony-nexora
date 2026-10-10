@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Yony Nexora</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .box {
+            width: 90%;
+            max-width: 380px;
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        h1 {
+            color: #6c2bd9;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px;
+            margin-bottom: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6c2bd9;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #6c2bd9;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        p {
+            color: #666;
+        }
+
+        a {
+            color: #6c2bd9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h1>Yony Nexora</h1>
+        <h2>Mamorona compte</h2>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Nom d'utilisateur"
+                required>
+
+            <input
+                type="text"
+                name="contact"
+                placeholder="Adresse email ou numéro"
+                required>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Mot de passe"
+                required>
+
+            <button type="submit">
+                Créer mon compte
+            </button>
+
+        </form>
+
+        <p>
+            Efa manana compte?
+            <a href="/login">Se connecter</a>
+        </p>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Yony Nexora</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1c1e21;
+        }
+
+        header {
+            background: #6c2bd9;
+            color: white;
+            padding: 16px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .cover {
+            height: 280px;
+            background: linear-gradient(135deg, #6c2bd9, #182848);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .cover-button {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            background: white;
+            color: #6c2bd9;
+            padding: 11px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .cover-button:hover {
+            background: #eee;
+        }
+
+        .profile {
+            background: white;
+            padding: 0 24px 22px;
+            border-bottom: 1px solid #ddd;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            margin-top: -65px;
+            position: relative;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+            background: #eee;
+        }
+
+        .avatar-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+        }
+
+        .profile h2 {
+            margin: 10px 0 5px;
+        }
+
+        .muted {
+            color: #65676b;
+        }
+
+        .form {
+            background: white;
+            padding: 24px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #00000010;
+        }
+
+        .form h3 {
+            margin-top: 0;
+        }
+
+        .form label {
+            display: block;
+            font-weight: bold;
+            margin: 15px 0 7px;
+        }
+
+        .form input[type="file"],
+        .form input[type="text"],
+        .form input[type="email"],
+        .form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd0d5;
+            border-radius: 8px;
+            font: inherit;
+            background: white;
+        }
+
+        .form input[type="file"] {
+            padding: 9px;
+        }
+
+        .form textarea {
+            resize: vertical;
+        }
+
+        .form button {
+            margin-top: 20px;
+            background: #6c2bd9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 13px 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .form button:hover {
+            background: #5320ad;
+        }
+
+        .info {
+            text-align: center;
+            padding: 20px;
+            color: #65676b;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px auto;
+                padding: 0 8px;
+            }
+
+            .cover {
+                height: 180px;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .cover-button {
+                right: 8px;
+                bottom: 8px;
+                padding: 9px 10px;
+                font-size: 12px;
+            }
+
+            .profile {
+                padding: 0 16px 18px;
+            }
+
+            .avatar {
+                width: 115px;
+                height: 115px;
+                margin-top: -55px;
+            }
+
+            .form {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <strong>Yony Nexora</strong>
+    <a href="/">🏠 Accueil</a>
+</header>
+
+<main class="container">
+
+    <div class="cover"
+        {% if user.cover_pic %}
+        style="background-image: url('{{ url_for('static', filename='uploads/cover/' + user.cover_pic) }}');"
+        {% endif %}>
+
+        <label for="cover_pic" class="cover-button">
+            📷 Modifier la couverture
+        </label>
+    </div>
+
+    <section class="profile">
+
+        {% if user.profile_pic %}
+            <img
+                class="avatar"
+                src="{{ url_for('static', filename='uploads/profile/' + user.profile_pic) }}"
+                alt="Photo de profil">
+        {% else %}
+            <div class="avatar avatar-placeholder">👤</div>
+        {% endif %}
+
+        <h2>{{ user.username }}</h2>
+
+        {% if user.bio %}
+            <p>{{ user.bio }}</p>
+        {% else %}
+            <p class="muted">Bienvenue sur votre profil Yony Nexora.</p>
+        {% endif %}
+
+    </section>
+
+    <form class="form" method="POST" enctype="multipart/form-data">
+
+        <h3>Modifier mon profil</h3>
+        <p class="muted">Mettez à jour vos informations personnelles.</p>
+
+        <label for="profile_pic">Photo de profil</label>
+        <input
+            type="file"
+            id="profile_pic"
+            name="profile_pic"
+            accept="image/*">
+
+        <label for="cover_pic">Photo de couverture</label>
+        <input
+            type="file"
+            id="cover_pic"
+            name="cover_pic"
+            accept="image/*">
+
+        <label for="bio">Biographie</label>
+        <textarea
+            id="bio"
+            name="bio"
+            rows="4"
+            maxlength="500"
+            placeholder="Parlez un peu de vous...">{{ user.bio or '' }}</textarea>
+
+        <label for="email">Adresse email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            value="{{ user.email or '' }}"
+            placeholder="Votre adresse email">
+
+        <label for="phone">Numéro de téléphone</label>
+        <input
+            type="text"
+            id="phone"
+            name="phone"
+            value="{{ user.phone or '' }}"
+            placeholder="Votre numéro de téléphone">
+
+        <button type="submit">Enregistrer les modifications</button>
+
+    </form>
+
+    <div class="info">
+        <strong>Yony Nexora</strong>
+        <p>Votre espace personnel.</p>
+    </div>
+
+</main>
+
+<script>
+    document.getElementById("cover_pic").addEventListener("change", function () {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                document.querySelector(".cover").style.backgroundImage =
+                    "url('" + event.target.result + "')";
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+</script>
+
+</body>
+</html>
