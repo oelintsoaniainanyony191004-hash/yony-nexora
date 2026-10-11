@@ -172,7 +172,7 @@ Connecte-toi • Partage • Grandis
 Entre dans ton compte Yony Nexora
 </div>
 
-{% if saved_accounts %}<div style="margin-bottom:18px"><b>Comptes enregistrés</b>{% for account in saved_accounts %}<button type="button" onclick="document.querySelector('[name=username]').value='{{ account[0] }}';document.querySelector('[name=password]').focus()" style="display:block;width:100%;padding:12px;margin-top:8px;border:1px solid #dce3ed;border-radius:12px;background:#f8fafc;text-align:left">👤 {{ account[0] }}</button>{% endfor %}</div>{% endif %}
+<div id="savedAccounts" style="margin-bottom:18px"></div>
 
 <form method="POST">
 
@@ -231,5 +231,31 @@ p.type=p.type==="password"?"text":"password";
 }
 </script>
 
-</body>
+
+<script>
+const savedBox = document.getElementById('savedAccounts');
+const savedKey = 'yony_saved_accounts';
+function showSavedAccounts() {
+  const accounts = JSON.parse(localStorage.getItem(savedKey) || '[]');
+  if (!savedBox || !accounts.length) return;
+  savedBox.innerHTML = '<b>Comptes enregistrés</b>';
+  accounts.forEach(name => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = '👤 ' + name;
+    button.style.cssText = 'display:block;width:100%;padding:12px;margin-top:8px;border:1px solid #dce3ed;border-radius:12px;background:#f8fafc;text-align:left';
+    button.onclick = () => { document.querySelector('[name=username]').value = name; document.querySelector('[name=password]').focus(); };
+    savedBox.appendChild(button);
+  });
+}
+showSavedAccounts();
+document.querySelector('form').addEventListener('submit', () => {
+  const name = document.querySelector('[name=username]').value.trim();
+  if (!name) return;
+  let accounts = JSON.parse(localStorage.getItem(savedKey) || '[]');
+  accounts = [name, ...accounts.filter(x => x !== name)].slice(0, 5);
+  localStorage.setItem(savedKey, JSON.stringify(accounts));
+});
+</script>
+\n</body>
 </html>
