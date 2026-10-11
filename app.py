@@ -371,14 +371,50 @@ def register():
 
 
 @app.route("/login", methods=["GET", "POST"])
-@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        identifier = request.form["username"]
-        password = request.form["password"]
+        identifier = request.form.get("username", "").strip()
+        password = request.form.get("password", "")
 
-        return render_template("login.html", saved_accounts=[])
+        db = get_db()
+        user = db.execute(
+            """SELECT * FROM users
+               WHERE (username=? OR email=? OR phone=?)
+               AND password=?""",
+            (identifier, identifier, identifier, password)
+        ).fetchone()
+        db.close()
 
+        if not user:
+            return "Adresse email, numéro ou mot de passe incorrect.", 401
+
+        session["username"] = user[1]
+        response = redirect("/")
+        token = URLSafeTimedSerializer(app.secret_key).dumps(user[1])
+        response.set_cookie(
+            "yony_remember", token, max_age=2592000,
+            httponly=True, secure=request.is_secure, samesite="Lax"
+        )
+        return response
+
+    token = request.cookies.get("yony_remember")
+    if token:
+        try:
+            username = URLSafeTimedSerializer(app.secret_key).loads(
+                token, max_age=2592000
+            )
+            db = get_db()
+            user = db.execute(
+                "SELECT username FROM users WHERE username=?", (username,)
+            ).fetchone()
+            db.close()
+            if user:
+                session["username"] = username
+                return redirect("/")
+        except Exception:
+            pass
+
+    return render_template("login.html", saved_accounts=[])
 
 @app.route("/post", methods=["POST"])
 def create_post():
