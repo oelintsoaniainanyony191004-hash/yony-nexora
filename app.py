@@ -525,7 +525,9 @@ def share_post(post_id):
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/login")
+    response = redirect("/login")
+    response.delete_cookie("yony_remember")
+    return response
 
 
 
