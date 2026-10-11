@@ -224,12 +224,77 @@ Plus qu’un réseau, une communauté
 
 </div>
 
+```html
 <script>
-function togglePassword(){
-const p=document.getElementById("password");
-p.type=p.type==="password"?"text":"password";
+const savedBox = document.getElementById('savedAccounts');
+const savedKey = 'yony_saved_accounts';
+
+function showSavedAccounts() {
+  const accounts = JSON.parse(localStorage.getItem(savedKey) || '[]');
+
+  savedBox.innerHTML = `
+    <div style="text-align:left;font-weight:bold;margin-bottom:10px">
+      Comptes enregistrés
+    </div>
+  `;
+
+  accounts.forEach(account => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.style.cssText = `
+      display:flex;align-items:center;gap:12px;width:100%;
+      padding:12px;margin-bottom:10px;border:1px solid #ddd;
+      border-radius:12px;background:white;text-align:left;
+      cursor:pointer;font-size:15px;
+    `;
+
+    const avatar = document.createElement('div');
+    avatar.textContent = '👤';
+    avatar.style.cssText = `
+      width:44px;height:44px;border-radius:50%;
+      background:#e9e9e9;display:flex;align-items:center;
+      justify-content:center;font-size:24px;flex-shrink:0;
+    `;
+
+    const name = document.createElement('span');
+    name.textContent = account;
+
+    card.append(avatar, name);
+    card.onclick = () => {
+      document.querySelector('[name=username]').value = account;
+      document.querySelector('[name=password]').focus();
+    };
+
+    savedBox.appendChild(card);
+  });
+
+  const add = document.createElement('button');
+  add.type = 'button';
+  add.textContent = '+ Ajouter un compte';
+  add.style.cssText = `
+    width:100%;padding:12px;border:1px solid #1877f2;
+    border-radius:12px;background:#1877f2;color:white;
+    font-weight:bold;cursor:pointer;
+  `;
+  add.onclick = () => {
+    document.querySelector('[name=username]').value = '';
+    document.querySelector('[name=password]').value = '';
+    document.querySelector('[name=username]').focus();
+  };
+  savedBox.appendChild(add);
 }
-</script>
+
+showSavedAccounts();
+
+document.querySelector('form').addEventListener('submit', () => {
+  const name = document.querySelector('[name=username]').value.trim();
+  if (!name) return;
+
+  let accounts = JSON.parse(localStorage.getItem(savedKey) || '[]');
+  accounts = [name, ...accounts.filter(x => x !== name)].slice(0, 5);
+  localStorage.setItem(savedKey, JSON.stringify(accounts));
+});
+</script>```
 
 
 <script>
