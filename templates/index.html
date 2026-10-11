@@ -701,58 +701,6 @@
     <main>
 
 
-        <!-- PROFILE -->
-
-        <div class="profile-card">
-
-            <div class="cover"></div>
-
-            <div class="profile-content">
-
-                {% if profile_pic %}
-
-                    <img
-                        class="profile-picture"
-                        src="{{ url_for('static', filename='uploads/profile/' + profile_pic) }}"
-                        alt="Photo de profil"
-                    >
-
-                {% else %}
-
-                    <div class="avatar">
-                        {{ username[0]|upper }}
-                    </div>
-
-                {% endif %}
-
-                <div class="username">
-                    {{ username }}
-                </div>
-
-                <form
-                    class="profile-form"
-                    action="/profile"
-                    method="POST"
-                    enctype="multipart/form-data"
-                >
-
-                    <input
-                        type="file"
-                        name="profile_pic"
-                        accept="image/*"
-                    >
-
-                    <button class="btn" type="submit">
-                        📷 Changer PDP
-                    </button>
-
-                </form>
-
-            </div>
-
-        </div>
-
-
         <!-- CREATE POST -->
 
         <div class="card">
