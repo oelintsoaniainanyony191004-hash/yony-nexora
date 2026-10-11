@@ -1,326 +1,367 @@
+```html
 <!DOCTYPE html>
-<html lang="mg">
-<head><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<html lang="fr">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connexion - Yony Nexora</title>
 
 <style>
-*{box-sizing:border-box}
+* { box-sizing: border-box; }
 
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#fff;
-color:#172033;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #172033;
 }
 
-.top{
-min-height:380px;
-padding:45px 20px 110px;
-text-align:center;
-background:linear-gradient(180deg,#182848,#6C5CE7,#fff);
+.top {
+  min-height: 300px;
+  padding: 35px 20px 95px;
+  text-align: center;
+  background: linear-gradient(180deg, #182848, #6C5CE7, #f0f2f5);
 }
 
-.nexus-logo{
-width:90px;
-height:90px;
-margin:auto;
+.nexus-logo, .nexus-logo svg {
+  width: 76px;
+  height: 76px;
+  margin: auto;
 }
 
-.nexus-logo svg{
-width:90px;
-height:90px;
+.brand {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 9px 15px;
+  border: 2px solid #FF2D95;
+  border-radius: 12px;
+  background: white;
+  font-size: 25px;
+  font-weight: 900;
 }
 
-.brand{font-size:30px;font-weight:900;margin-top:10px;letter-spacing:1px;}
-
-.tagline{
-color:#fff;
-font-size:14px;
-margin-top:8px;
+.tagline {
+  color: white;
+  font-size: 14px;
+  margin-top: 8px;
 }
 
-.login-card{
-width:calc(100% - 32px);
-max-width:420px;
-margin:-90px auto 0;
-position:relative;
-background:#fff;
-border-radius:20px;
-padding:25px 20px;
-box-shadow:0 5px 20px rgba(0,0,0,.12);
+.login-card {
+  width: calc(100% - 28px);
+  max-width: 420px;
+  margin: -75px auto 0;
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.12);
 }
 
-.title{
-text-align:center;
-font-size:26px;
-font-weight:800;
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
 }
 
-.subtitle{
-text-align:center;
-color:#788397;
-font-size:14px;
-margin:7px 0 22px;
+.subtitle {
+  text-align: center;
+  color: #788397;
+  font-size: 14px;
+  margin: 7px 0 20px;
 }
 
-.field{
-margin-bottom:14px;
+#savedAccounts {
+  margin-bottom: 16px;
 }
 
-.field input{
-width:100%;
-height:50px;
-border:1px solid #dce3ed;
-border-radius:12px;
-padding:0 14px;
-font-size:15px;
-outline:none;
-background:#f8fafc;
+.saved-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
-.password-wrap{
-position:relative;
+.account-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px;
+  margin-bottom: 8px;
+  border: 1px solid #dddfe2;
+  border-radius: 8px;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.password-wrap input{
-padding-right:45px;
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #e4e6eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  flex-shrink: 0;
 }
 
-.eye{
-position:absolute;
-right:14px;
-top:15px;
-font-size:18px;
-cursor:pointer;
+.account-name {
+  overflow-wrap: anywhere;
+  font-weight: bold;
 }
 
-.login-btn{
-width:100%;
-height:52px;
-border:0;
-border-radius:12px;
-background:linear-gradient(135deg,#087df2,#1698ff);
-color:white;
-font-size:16px;
-font-weight:800;
+.add-account {
+  width: 100%;
+  padding: 11px;
+  border: 0;
+  border-radius: 7px;
+  background: #1877f2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.register{
-text-align:center;
-margin-top:20px;
-font-size:14px;
-color:#687589;
+.field {
+  margin-bottom: 12px;
 }
 
-.register a{
-color:#087df2;
-text-decoration:none;
-font-weight:800;
+.field input {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 15px;
+  outline: none;
+  background: #f8fafc;
 }
 
-.bottom{
-text-align:center;
-padding:55px 20px 30px;
-color:#718096;
-font-size:13px;
+.password-wrap {
+  position: relative;
 }
 
-.footer-title{
-color:#087df2;
-font-weight:800;
-margin-bottom:5px;
+.password-wrap input {
+  padding-right: 45px;
 }
-<style>.yony-text{color:#00A8FF!important;font-weight:900}.nexora-text{color:#2979FF!important;font-weight:900}<style>.yony-style{font-weight:900;color:#2979FF !important}.nexora-style{font-weight:900;color:#FF2D95 !important;letter-spacing:1px}</style>\n</style>\n<style>.yony-style{font-weight:900;color:#2979FF !important}.nexora-style{font-weight:900;color:#FF2D95 !important;letter-spacing:1px}</style>\n</style>
+
+.eye {
+  position: absolute;
+  right: 13px;
+  top: 14px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.login-btn {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 8px;
+  background: #1877f2;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.register {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 14px;
+  color: #687589;
+}
+
+.register a {
+  color: #1877f2;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.bottom {
+  text-align: center;
+  padding: 35px 20px 25px;
+  color: #718096;
+  font-size: 13px;
+}
+
+.footer-title {
+  color: #1877f2;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="top">
+  <div class="nexus-logo">
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="n" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stop-color="#087DF2"/>
+          <stop offset="50%" stop-color="#12C8F4"/>
+          <stop offset="100%" stop-color="#9B55E9"/>
+        </linearGradient>
+      </defs>
+      <path d="M25 95V25L85 75V25Q85 15 95 15Q105 15 105 25V95Q105 105 95 105Q90 105 85 100L45 65V95Q45 105 35 105Q25 105 25 95Z" fill="url(#n)"/>
+    </svg>
+  </div>
 
-<div class="nexus-logo">
-<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <div class="brand">
+    <span style="color:#F5B942">𝚈𝚘𝚗𝚢</span>
+    <span style="color:#FF2D95">𝐍𝐄𝐗𝐎𝐑𝐀</span>
+  </div>
 
-<defs>
-<linearGradient id="n" x1="0" y1="1" x2="1" y2="0">
-<stop offset="0%" stop-color="#087DF2"/>
-<stop offset="50%" stop-color="#12C8F4"/>
-<stop offset="100%" stop-color="#9B55E9"/>
-</linearGradient>
-</defs>
-
-<path
-d="M25 95V25L85 75V25Q85 15 95 15Q105 15 105 25V95Q105 105 95 105Q90 105 85 100L45 65V95Q45 105 35 105Q25 105 25 95Z"
-fill="url(#n)"/>
-</svg>
-</div>
-
-<div class="brand" style="display:inline-block;padding:10px 18px;border:2px solid #FF2D95;border-radius:14px;background:#fff;box-shadow:0 3px 12px rgba(255,45,149,.18);"><span style="color:#F5B942 !important;font-weight:900">𝚈𝚘𝚗𝚢</span> <span style="color:#FF2D95 !important;font-weight:900">𝐍𝐄𝐗𝐎𝐑𝐀</span></div>
-
-<div class="tagline">
-Connecte-toi • Partage • Grandis
-</div>
-
+  <div class="tagline">Connecte-toi • Partage • Grandis</div>
 </div>
 
 <div class="login-card">
+  <div class="title">Connexion</div>
+  <div class="subtitle">Entre dans ton compte Yony Nexora</div>
 
-<div class="title">Connexion</div>
+  <div id="savedAccounts"></div>
 
-<div class="subtitle">
-Entre dans ton compte Yony Nexora
-</div>
+  <form id="loginForm" method="POST" style="display:none">
+    <div class="field">
+      <input
+        type="text"
+        name="username"
+        placeholder="Adresse email ou numéro"
+        autocomplete="username"
+        required>
+    </div>
 
-<div id="savedAccounts" style="margin-bottom:18px"></div>
+    <div class="field password-wrap">
+      <input
+        id="password"
+        type="password"
+        name="password"
+        placeholder="Mot de passe"
+        autocomplete="current-password"
+        required>
+      <span class="eye" onclick="togglePassword()">👁</span>
+    </div>
 
-<form method="POST">
+    <button class="login-btn" type="submit">Se connecter</button>
+    <button class="cancel-btn" type="button" onclick="showAccounts()">
+      Annuler
+    </button>
+  </form>
 
-<div class="field">
-<input
-type="text"
-name="username"
-placeholder="Adresse email ou numéro"
-autocomplete="username"
-required>
-</div>
-
-<div class="field password-wrap">
-
-<input
-id="password"
-type="password"
-name="password"
-placeholder="Mot de passe"
-autocomplete="current-password"
-required>
-
-<span class="eye" onclick="togglePassword()">👁</span>
-
-</div>
-
-<button class="login-btn" type="submit">
-Se connecter
-</button>
-
-</form>
-
-<div class="register">
-Tsy mbola manana compte?
-<a href="/register">Créer un compte</a>
-</div>
-
+  <div class="register">
+    Tsy mbola manana compte?
+    <a href="/register">Créer un compte</a>
+  </div>
 </div>
 
 <div class="bottom">
-
-<div class="footer-title">
-Yony Nexora
+  <div class="footer-title">Yony Nexora</div>
+  <div>Plus qu’un réseau, une communauté</div>
 </div>
 
-<div>
-Plus qu’un réseau, une communauté
-</div>
-
-</div>
-
-```html
 <script>
 const savedBox = document.getElementById('savedAccounts');
+const loginForm = document.getElementById('loginForm');
 const savedKey = 'yony_saved_accounts';
 
-function showSavedAccounts() {
-  const accounts = JSON.parse(localStorage.getItem(savedKey) || '[]');
+function getAccounts() {
+  try {
+    return JSON.parse(localStorage.getItem(savedKey) || '[]');
+  } catch (e) {
+    return [];
+  }
+}
 
-  savedBox.innerHTML = `
-    <div style="text-align:left;font-weight:bold;margin-bottom:10px">
-      Comptes enregistrés
-    </div>
-  `;
+function showAccounts() {
+  loginForm.style.display = 'none';
+  savedBox.style.display = 'block';
+  savedBox.innerHTML = '';
 
-  accounts.forEach(account => {
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.style.cssText = `
-      display:flex;align-items:center;gap:12px;width:100%;
-      padding:12px;margin-bottom:10px;border:1px solid #ddd;
-      border-radius:12px;background:white;text-align:left;
-      cursor:pointer;font-size:15px;
-    `;
+  const accounts = getAccounts();
 
-    const avatar = document.createElement('div');
-    avatar.textContent = '👤';
-    avatar.style.cssText = `
-      width:44px;height:44px;border-radius:50%;
-      background:#e9e9e9;display:flex;align-items:center;
-      justify-content:center;font-size:24px;flex-shrink:0;
-    `;
+  if (accounts.length > 0) {
+    const title = document.createElement('div');
+    title.className = 'saved-title';
+    title.textContent = 'Comptes enregistrés';
+    savedBox.appendChild(title);
 
-    const name = document.createElement('span');
-    name.textContent = account;
+    accounts.forEach(account => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'account-card';
 
-    card.append(avatar, name);
-    card.onclick = () => {
-      document.querySelector('[name=username]').value = account;
-      document.querySelector('[name=password]').focus();
-    };
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.textContent = '👤';
 
-    savedBox.appendChild(card);
-  });
+      const name = document.createElement('span');
+      name.className = 'account-name';
+      name.textContent = account;
+
+      card.append(avatar, name);
+
+      card.onclick = () => {
+        loginForm.style.display = 'block';
+        savedBox.style.display = 'none';
+        loginForm.querySelector('[name="username"]').value = account;
+        loginForm.querySelector('[name="password"]').value = '';
+        loginForm.querySelector('[name="password"]').focus();
+      };
+
+      savedBox.appendChild(card);
+    });
+  }
 
   const add = document.createElement('button');
   add.type = 'button';
+  add.className = 'add-account';
   add.textContent = '+ Ajouter un compte';
-  add.style.cssText = `
-    width:100%;padding:12px;border:1px solid #1877f2;
-    border-radius:12px;background:#1877f2;color:white;
-    font-weight:bold;cursor:pointer;
-  `;
+
   add.onclick = () => {
-    document.querySelector('[name=username]').value = '';
-    document.querySelector('[name=password]').value = '';
-    document.querySelector('[name=username]').focus();
+    savedBox.style.display = 'none';
+    loginForm.style.display = 'block';
+    loginForm.reset();
+    loginForm.querySelector('[name="username"]').focus();
   };
+
   savedBox.appendChild(add);
 }
 
-showSavedAccounts();
-
-document.querySelector('form').addEventListener('submit', () => {
-  const name = document.querySelector('[name=username]').value.trim();
-  if (!name) return;
-
-  let accounts = JSON.parse(localStorage.getItem(savedKey) || '[]');
-  accounts = [name, ...accounts.filter(x => x !== name)].slice(0, 5);
-  localStorage.setItem(savedKey, JSON.stringify(accounts));
-});
-</script>```
-
-
-<script>
-const savedBox = document.getElementById('savedAccounts');
-const savedKey = 'yony_saved_accounts';
-function showSavedAccounts() {
-  const accounts = JSON.parse(localStorage.getItem(savedKey) || '[]');
-  if (!savedBox || !accounts.length) return;
-  savedBox.innerHTML = '<b>Comptes enregistrés</b>';
-  accounts.forEach(name => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = '👤 ' + name;
-    button.style.cssText = 'display:block;width:100%;padding:12px;margin-top:8px;border:1px solid #dce3ed;border-radius:12px;background:#f8fafc;text-align:left';
-    button.onclick = () => { document.querySelector('[name=username]').value = name; document.querySelector('[name=password]').focus(); };
-    savedBox.appendChild(button);
-  });
+function togglePassword() {
+  const password = document.getElementById('password');
+  password.type = password.type === 'password' ? 'text' : 'password';
 }
-showSavedAccounts();
-document.querySelector('form').addEventListener('submit', () => {
-  const name = document.querySelector('[name=username]').value.trim();
-  if (!name) return;
-  let accounts = JSON.parse(localStorage.getItem(savedKey) || '[]');
-  accounts = [name, ...accounts.filter(x => x !== name)].slice(0, 5);
-  localStorage.setItem(savedKey, JSON.stringify(accounts));
+
+loginForm.addEventListener('submit', () => {
+  const username = loginForm.querySelector('[name="username"]').value.trim();
+  if (!username) return;
+
+  const accounts = getAccounts();
+  const updated = [
+    username,
+    ...accounts.filter(account => account !== username)
+  ].slice(0, 5);
+
+  localStorage.setItem(savedKey, JSON.stringify(updated));
 });
+
+showAccounts();
 </script>
-\n</body>
+
+</body>
 </html>
+```
