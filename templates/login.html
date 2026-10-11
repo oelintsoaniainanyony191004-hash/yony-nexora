@@ -286,57 +286,58 @@ function getAccounts() {
 }
 
 function showAccounts() {
+  const accounts = getAccounts();
+  if (!accounts.length) {
+    savedBox.style.display = 'none';
+    loginForm.style.display = 'block';
+    return;
+  }
+
   loginForm.style.display = 'none';
   savedBox.style.display = 'block';
   savedBox.innerHTML = '';
 
-  const accounts = getAccounts();
+  const title = document.createElement('div');
+  title.className = 'saved-title';
+  title.textContent = 'Comptes enregistrés';
+  savedBox.appendChild(title);
 
-  if (accounts.length > 0) {
-    const title = document.createElement('div');
-    title.className = 'saved-title';
-    title.textContent = 'Comptes enregistrés';
-    savedBox.appendChild(title);
+  accounts.forEach(account => {
+    const identifier = typeof account === 'string' ? account : account.username;
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'account-card';
 
-    accounts.forEach(account => {
-      const card = document.createElement('button');
-      card.type = 'button';
-      card.className = 'account-card';
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    avatar.textContent = '👤';
 
-      const avatar = document.createElement('div');
-      avatar.className = 'avatar';
-      avatar.textContent = '👤';
+    const name = document.createElement('span');
+    name.className = 'account-name';
+    name.textContent = identifier;
+    card.append(avatar, name);
 
-      const name = document.createElement('span');
-      name.className = 'account-name';
-      name.textContent = account;
+    card.onclick = () => {
+      loginForm.style.display = 'block';
+      savedBox.style.display = 'none';
+      loginForm.querySelector('[name="username"]').value = identifier;
+      loginForm.querySelector('[name="password"]').value = '';
+      loginForm.querySelector('[name="password"]').focus();
+    };
 
-      card.append(avatar, name);
-
-      card.onclick = () => {
-        loginForm.style.display = 'block';
-        savedBox.style.display = 'none';
-        loginForm.querySelector('[name="username"]').value = account;
-        loginForm.querySelector('[name="password"]').value = '';
-        loginForm.querySelector('[name="password"]').focus();
-      };
-
-      savedBox.appendChild(card);
-    });
-  }
+    savedBox.appendChild(card);
+  });
 
   const add = document.createElement('button');
   add.type = 'button';
   add.className = 'add-account';
   add.textContent = '+ Ajouter un compte';
-
   add.onclick = () => {
     savedBox.style.display = 'none';
     loginForm.style.display = 'block';
     loginForm.reset();
     loginForm.querySelector('[name="username"]').focus();
   };
-
   savedBox.appendChild(add);
 }
 
@@ -346,19 +347,25 @@ function togglePassword() {
 }
 
 loginForm.addEventListener('submit', () => {
-  const username = loginForm.querySelector('[name="username"]').value.trim();
-  if (!username) return;
+  const identifier = loginForm.querySelector('[name="username"]').value.trim();
+  if (!identifier) return;
 
-  const accounts = getAccounts();
-  const updated = [
-    username,
-    ...accounts.filter(account => account !== username)
-  ].slice(0, 5);
-
-  localStorage.setItem(savedKey, JSON.stringify(updated));
+  const accounts = getAccounts().map(a =>
+    typeof a === 'string' ? a : a.username
+  );
+  localStorage.setItem(
+    savedKey,
+    JSON.stringify([identifier, ...accounts.filter(a => a !== identifier)].slice(0, 5))
+  );
 });
 
-if (getAccounts().length === 0) { loginForm.style.display = "block"; savedBox.style.display = "none"; } else { showAccounts(); }
+if (getAccounts().length) {
+  showAccounts();
+} else {
+  savedBox.style.display = 'none';
+  loginForm.style.display = 'block';
+}
+
 </script>
 
 </body>
