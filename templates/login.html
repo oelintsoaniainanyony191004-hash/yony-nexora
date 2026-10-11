@@ -358,9 +358,8 @@ loginForm.addEventListener('submit', () => {
   localStorage.setItem(savedKey, JSON.stringify(updated));
 });
 
-showAccounts();
+if (getAccounts().length === 0) { loginForm.style.display = "block"; savedBox.style.display = "none"; } else { showAccounts(); }
 </script>
 
 </body>
 </html>
-```
