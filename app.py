@@ -392,7 +392,10 @@ def login():
 
         return "Adresse email, numéro ou mot de passe diso."
 
-    return render_template("login.html")
+    db = get_db()
+    saved_accounts = db.execute("SELECT username, email, phone, profile_pic FROM users ORDER BY id DESC").fetchall()
+    db.close()
+    return render_template("login.html", saved_accounts=saved_accounts)
 
 
 @app.route("/post", methods=["POST"])

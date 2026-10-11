@@ -172,6 +172,8 @@ Connecte-toi • Partage • Grandis
 Entre dans ton compte Yony Nexora
 </div>
 
+{% if saved_accounts %}<div style="margin-bottom:18px"><b>Comptes enregistrés</b>{% for account in saved_accounts %}<button type="button" onclick="document.querySelector('[name=username]').value='{{ account[1] }}'" style="display:block;width:100%;padding:12px;margin-top:8px;border:1px solid #dce3ed;border-radius:12px;background:#f8fafc;text-align:left">👤 {{ account[1] }}</button>{% endfor %}</div>{% endif %}
+
 <form method="POST">
 
 <div class="field">
