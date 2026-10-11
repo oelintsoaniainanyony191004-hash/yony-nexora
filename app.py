@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
 import os
 from werkzeug.utils import secure_filename
+from itsdangerous import URLSafeTimedSerializer, BadSignature
 
 app = Flask(__name__)
 import os
@@ -388,7 +389,10 @@ def login():
 
         if user:
             session["username"] = user[1]
-            return redirect("/")
+            response = redirect("/")
+            token = URLSafeTimedSerializer(app.secret_key).dumps(user[1])
+            response.set_cookie("yony_remember", token, max_age=2592000, httponly=True, secure=request.is_secure, samesite="Lax")
+            return response
 
         return "Adresse email, numéro ou mot de passe diso."
 
