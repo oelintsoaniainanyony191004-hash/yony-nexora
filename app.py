@@ -377,50 +377,7 @@ def login():
         identifier = request.form["username"]
         password = request.form["password"]
 
-        db = get_db()
-        user = db.execute(
-            """SELECT * FROM users
-               WHERE (username=? OR email=? OR phone=?)
-               AND password=?""",
-            (identifier, identifier, identifier, password)
-        ).fetchone()
-        db.close()
-
-        if user:
-            session["username"] = user[1]
-            response = redirect("/")
-            token = URLSafeTimedSerializer(app.secret_key).dumps(user[1])
-            response.set_cookie(
-                "yony_remember", token, max_age=2592000,
-                httponly=True, secure=request.is_secure, samesite="Lax"
-            )
-            return response
-
-        return "Adresse email, numéro ou mot de passe diso."
-
-    token = request.cookies.get("yony_remember")
-    if token:
-        try:
-            username = URLSafeTimedSerializer(app.secret_key).loads(
-                token, max_age=2592000
-            )
-            db = get_db()
-            user = db.execute(
-                "SELECT username FROM users WHERE username=?", (username,)
-            ).fetchone()
-            db.close()
-            if user:
-                session["username"] = username
-                return redirect("/")
-        except (BadSignature, Exception):
-            pass
-
-    db = get_db()
-    saved_accounts = db.execute(
-        "SELECT username, email, phone, profile_pic FROM users ORDER BY id DESC"
-    ).fetchall()
-    db.close()
-    return render_template("login.html", saved_accounts=saved_accounts)
+        return render_template("login.html", saved_accounts=[])
 
 
 @app.route("/post", methods=["POST"])
